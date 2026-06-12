@@ -11,7 +11,7 @@ from shutil import make_archive, rmtree
 from typing import Any
 
 from napari.qt import thread_worker
-from tifffile import imsave
+from tifffile import imwrite
 
 
 def write_single_image(path: str, data: Any, meta: dict):
@@ -25,7 +25,7 @@ def write_single_image(path: str, data: Any, meta: dict):
         for i, t_slice in enumerate(data):
             tiff_nme = f"seg{str(i).zfill(3)}.tif"
             tiff_pth = os.path.join(dir_pth, tiff_nme)
-            imsave(tiff_pth, t_slice)
+            imwrite(tiff_pth, t_slice)
 
     def zip_dir():
         make_archive(path, "zip", path)

@@ -1,15 +1,77 @@
 [build-system]
-requires = ["setuptools>=42.0.0", "wheel", "setuptools_scm"]
+requires = ["setuptools>=61.0", "wheel", "setuptools_scm"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "precision-recall-analysis-tool"
+dynamic = ["version"]
+description = "This is an analytics built initially for counting objects during segmentation but generalized for use in all segmentation or counting tasks."
+readme = "README.md"
+license = { text = "MIT" }
+authors = [
+    { name = "Christopher Guirguis", email = "christopher.g.codes@gmail.com" },
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Framework :: napari",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Image Processing",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "dask[array]",
+    "imagecodecs",
+    "napari[all]",
+    "napari-plugin-engine>=0.1.4",
+    "numpy",
+    "scikit-image",
+    "tifffile",
+    "matplotlib>=3.7.5",
+    "magicgui>=0.9.1",
+]
+
+[project.urls]
+"Bug Tracker" = "https://github.com/chrislearns/precision-recall-analysis-tool/issues"
+"Documentation" = "https://github.com/chrislearns/precision-recall-analysis-tool#README.md"
+"Source Code" = "https://github.com/chrislearns/precision-recall-analysis-tool"
+"User Support" = "https://github.com/chrislearns/precision-recall-analysis-tool/issues"
+
+[project.optional-dependencies]
+testing = [
+    "tox",
+    "pytest",
+    "pytest-cov",
+    "pytest-qt",
+    "napari",
+    "pyqt5",
+]
+
+[project.entry-points."napari.manifest"]
+precision-recall-analysis-tool = "precision_recall_analysis_tool:napari.yaml"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["*.yaml"]
 
 [tool.setuptools_scm]
-write_to = "src/precision_recall_analysis_tool/_version.py"
+version_file = "src/precision_recall_analysis_tool/_version.py"
 
 [tool.black]
 line-length = 79
 target-version = ['py38', 'py39', 'py310']
-
 
 [tool.ruff]
 line-length = 79
@@ -31,7 +93,6 @@ ignore = [
     "UP006", "UP007", # type annotation. As using magicgui require runtime type annotation then we disable this.
     "SIM117", # flake8-simplify - some of merged with statements are not looking great with black, reanble after drop python 3.9
 ]
-
 exclude = [
     ".bzr",
     ".direnv",
@@ -53,6 +114,5 @@ exclude = [
     "*vendored*",
     "*_vendor*",
 ]
-
 target-version = "py38"
 fix = true
